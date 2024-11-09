@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond-Shaped Login Form</title>
+    <style>
+        /* General styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #a8e6ce, #ffd3b6);
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Diamond background shape */
+        .diamond-background {
+            position: relative;
+            width: 400px; /* Increased to fully encompass form */
+            height: 400px; /* Increased to fully encompass form */
+            background-color: #d8f3dc;
+            transform: rotate(45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px #74c69d;
+            border: 2px solid #74c69d;
+            transition: all 0.3s ease;
+        }
+
+        .diamond-background:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 25px #40916c;
+            transform: rotate(45deg) scale(1.05);
+        }
+
+        /* Container for the login form */
+        .login-container {
+            position: absolute;
+            width: 260px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transform: rotate(-45deg);
+            transition: transform 0.3s ease;
+        }
+
+        /* Title */
+        .login-container h2 {
+            margin-bottom: 10px;
+            color: #40916c;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Input fields styling */
+        .login-container input[type="text"],
+        .login-container input[type="password"],
+        .login-container input[type="email"],
+        .login-container input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            border: 1px solid #b7e4c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        /* Login button styling */
+        .login-container button {
+            background-color: #68b684;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #40916c;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Diamond background -->
+    <div class="diamond-background">
+        <!-- Login form container -->
+        <div class="login-container">
+            <h2>WELCOME TO LOGIN</h2>
+            <form id="loginForm">
+                <input type="text" id="fullName" placeholder="Full Name" required>
+                <div class="error-message" id="nameError"></div>
+
+                <input type="email" id="email" placeholder="Email ID" required>
+                <div class="error-message" id="emailError"></div>
+
+                <input type="tel" id="phone" placeholder="Phone Number" required>
+                <div class="error-message" id="phoneError"></div>
+
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="error-message" id="passwordError"></div>
+
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <div class="error-message" id="confirmPasswordError"></div>
+
+                <button type="button" onclick="validateForm()">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("phoneError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("confirmPasswordError").textContent = "";
+
+            const fullName = document.getElementById("fullName").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Name validation
+            if (fullName.length < 5) {
+                document.getElementById("nameError").textContent = "Name must be at least 5 characters long.";
+                isValid = false;
+            }
+
+            // Email validation
+            if (!email.includes("@")) {
+                document.getElementById("emailError").textContent = "Enter a valid email with '@'.";
+                isValid = false;
+            }
+
+            // Phone number validation
+            if (phone === "123456789" || phone.length !== 10 || isNaN(phone)) {
+                document.getElementById("phoneError").textContent = "Enter a valid 10-digit phone number.";
+                isValid = false;
+            }
+
+            // Password validation
+            if (password.toLowerCase() === "password") {
+                document.getElementById("passwordError").textContent = "Password cannot be 'password'.";
+                isValid = false;
+            } else if (password.toLowerCase() === fullName.toLowerCase()) {
+                document.getElementById("passwordError").textContent = "Password cannot be your name.";
+                isValid = false;
+            } else if (password.length < 8) {
+                document.getElementById("passwordError").textContent = "Password must be at least 8 characters long.";
+                isValid = false;
+            }
+
+            // Confirm password validation
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                isValid = false;
+            }
+
+            // Final check
+            if (isValid) {
+                alert("Form submitted successfully!");
+            }
+        }
+    </script>
+</body>
+</html>
